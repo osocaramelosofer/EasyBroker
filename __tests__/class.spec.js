@@ -1,8 +1,7 @@
 const EasyBroker = require("../class");
-const config = require("../index");
 
 describe("EasyBroker", () => {
-  const easyBroker = new EasyBroker(config);
+  const easyBroker = new EasyBroker("https://api.stagingeb.com/v1/properties");
 
   test("should return string array (getTitleList())", async() => {
     const titleList = await easyBroker.getTitleList();

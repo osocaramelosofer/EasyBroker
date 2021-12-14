@@ -1,36 +1,17 @@
 const axios = require("axios");
 
+
 class EasyBrokerAPI {
-  constructor({ url, method, params, propertieId, headers }) {
+  constructor(url) {
     this.url = url;
-    this.method = method;
-    this.params = params;
-    this.propertieId = propertieId;
-    this.headers = headers;
-  }
-
-  createUrl() {
-    let url = this.url;
-
-    if (this.propertieId) {
-      url = `${url}/${this.propertieId}`;
-    }
-
-    if (this.params) {
-      url += "?";
-
-      const params = Object.entries(this.params);
-      url = params.reduce((acc, [key, value], index) => {
-        const isAnd = index == params.length - 1 ? "" : "&";
-        return `${acc}${key}=${value}${isAnd}`;
-      }, url);
-    }
-
-    this.url = url;
+    this.headers =  {
+      "x-authorization": "l7u502p8v46ba3ppgvj5y2aad50lb9",
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+    };
   }
 
   async getTitleList() {
-    this.createUrl();
     try {
       const { data } = await this.submitRequest();
       if (!data) throw null;
@@ -43,7 +24,7 @@ class EasyBrokerAPI {
   }
 
   async submitRequest() {
-    return await axios[this.method](this.url, {
+    return await axios.get(this.url, {
       headers: this.headers,
     });
   }
